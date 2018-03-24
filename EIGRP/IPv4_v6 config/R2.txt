@@ -1,0 +1,186 @@
+!
+! Last configuration change at 14:43:19 UTC Fri Mar 23 2018
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+ipv6 unicast-routing
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9QR2ACGASOE
+!
+spanning-tree extend system-id
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ no shutdown
+ description Mgmt
+ ip address 20.0.0.2 255.255.255.255
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000::2/128
+!
+interface GigabitEthernet1
+ no shutdown
+ ip address dhcp
+ negotiation auto
+!
+interface GigabitEthernet2
+ no shutdown
+ description connected to R1_0/0/0/0
+ ip address 20.1.2.2 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2001:12:22/112
+!
+interface GigabitEthernet3
+ no shutdown
+ description connected to R1_0/0/0/1
+ ip address 20.11.2.2 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2011:112:22/112
+!
+interface GigabitEthernet4
+ no shutdown
+ description connected to R7
+ ip address 20.2.7.2 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2002:27:22/112
+!
+interface GigabitEthernet5
+ no shutdown
+ description connected to R3
+ ip address 20.2.3.2 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2002:23:22/112
+!
+interface GigabitEthernet6
+ no shutdown
+ description connected to R4
+ ip address 20.2.4.2 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2002:24:22/112
+!
+interface GigabitEthernet7
+ no shutdown
+ description connected to R8
+ ip address 20.2.8.2 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::2 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2002:28:22/112
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+ stopbits 1
+line vty 0
+ login
+line vty 1
+ login
+ length 0
+line vty 2 4
+ login
+!
+!
+end

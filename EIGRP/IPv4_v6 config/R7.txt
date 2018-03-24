@@ -1,0 +1,178 @@
+!
+! Last configuration change at 14:18:37 UTC Fri Mar 23 2018
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+!
+!
+!
+ipv6 unicast-routing
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9PKXNUBNQ16
+!
+spanning-tree extend system-id
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ no shutdown
+ description Mgmt
+ ip address 20.0.0.7 255.255.255.255
+ ipv6 address FE80::7 link-local
+ ipv6 address 2001:A000:B000:C000:D000::7/128
+!
+interface GigabitEthernet1
+ no shutdown
+ ip address dhcp
+ negotiation auto
+!
+interface GigabitEthernet2
+ no shutdown
+ description connected to R1
+ ip address 20.1.7.7 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::7 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2001:17:77/96
+!
+interface GigabitEthernet3
+ no shutdown
+ description connected to R2
+ ip address 20.2.7.7 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::7 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2002:27:77/96
+!
+interface GigabitEthernet4
+ no shutdown
+ description connected to R6
+ ip address 20.6.7.7 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::7 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2006:67:77/96
+!
+interface GigabitEthernet5
+ no shutdown
+ description connected to R8
+ ip address 20.7.8.7 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::7 link-local
+ ipv6 address 2001:A000:B000:C000:D000:2007:78:77/96
+!
+interface GigabitEthernet6
+ no shutdown
+ description connected to R10
+ ip address 40.7.10.7 255.255.255.0
+ negotiation auto
+ ipv6 address FE80::7 link-local
+ ipv6 address 2001:A000:4000:710::77/96
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+ stopbits 1
+line vty 0
+ login
+line vty 1
+ login
+ length 0
+line vty 2 4
+ login
+!
+!
+end
