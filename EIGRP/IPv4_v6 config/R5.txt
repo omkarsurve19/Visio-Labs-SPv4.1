@@ -1,5 +1,5 @@
 !
-! Last configuration change at 14:17:06 UTC Fri Mar 23 2018
+! Last configuration change at 05:59:21 UTC Wed Mar 28 2018
 !
 version 15.5
 service timestamps debug datetime msec
@@ -93,8 +93,10 @@ interface Loopback0
  no shutdown
  description Mgmt
  ip address 20.0.0.5 255.255.255.255
+ ip router isis CORE_ISP
  ipv6 address FE80::5 link-local
  ipv6 address 2001:A000:B000:C000:D000::5/128
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet1
  no shutdown
@@ -105,17 +107,21 @@ interface GigabitEthernet2
  no shutdown
  description connected to R1
  ip address 20.1.5.5 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::5 link-local
  ipv6 address 2001:A000:B000:C000:D000:2001:15:55/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet3
  no shutdown
  description connected to R3
  ip address 20.3.5.5 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::5 link-local
  ipv6 address 2001:A000:B000:C000:D000:2003:35:55/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet4
  no shutdown
@@ -134,6 +140,17 @@ interface GigabitEthernet6
  no shutdown
  no ip address
  negotiation auto
+!
+router isis CORE_ISP
+ net 49.0001.2000.0000.5000.00
+ is-type level-2-only
+ advertise passive-only
+ metric-style wide
+ microloop avoidance 
+ !
+ address-family ipv6
+  multi-topology
+ exit-address-family
 !
 !
 virtual-service csr_mgmt
