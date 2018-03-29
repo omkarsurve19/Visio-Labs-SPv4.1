@@ -1,7 +1,7 @@
 !
-! Last configuration change at 14:43:19 UTC Fri Mar 23 2018
+! Last configuration change at 14:24:00 UTC Thu Mar 29 2018
 !
-version 15.5
+version 15.4
 service timestamps debug datetime msec
 service timestamps log datetime msec
 no platform punt-keepalive disable-kernel-core
@@ -15,8 +15,6 @@ boot-end-marker
 !
 !
 no aaa new-model
-!
-!
 !
 !
 !
@@ -45,23 +43,18 @@ subscriber templating
 multilink bundle-name authenticated
 !
 !
+key chain CORE
+ key 1
+   key-string key1 
+   cryptographic-algorithm md5
 !
 !
-!
-!
-!
-!
-!
-!
-!
-!
-!
-license udi pid CSR1000V sn 9QR2ACGASOE
-!
+license udi pid CSR1000V sn 9KE4ZZ5LCEC
 spanning-tree extend system-id
 !
 !
 redundancy
+ mode none
 !
 !
 !
@@ -83,11 +76,6 @@ redundancy
 !
 ! 
 ! 
-! 
-! 
-! 
-! 
-!
 !
 interface Loopback0
  no shutdown
@@ -105,49 +93,73 @@ interface GigabitEthernet2
  no shutdown
  description connected to R1_0/0/0/0
  ip address 20.1.2.2 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::2 link-local
  ipv6 address 2001:A000:B000:C000:D000:2001:12:22/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet3
  no shutdown
  description connected to R1_0/0/0/1
  ip address 20.11.2.2 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::2 link-local
  ipv6 address 2001:A000:B000:C000:D000:2011:112:22/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet4
  no shutdown
  description connected to R7
  ip address 20.2.7.2 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::2 link-local
  ipv6 address 2001:A000:B000:C000:D000:2002:27:22/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet5
  no shutdown
  description connected to R3
  ip address 20.2.3.2 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::2 link-local
  ipv6 address 2001:A000:B000:C000:D000:2002:23:22/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet6
  no shutdown
  description connected to R4
  ip address 20.2.4.2 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::2 link-local
  ipv6 address 2001:A000:B000:C000:D000:2002:24:22/112
+ ipv6 router isis CORE_ISP
 !
 interface GigabitEthernet7
  no shutdown
  description connected to R8
  ip address 20.2.8.2 255.255.255.0
+ ip router isis CORE_ISP
  negotiation auto
  ipv6 address FE80::2 link-local
  ipv6 address 2001:A000:B000:C000:D000:2002:28:22/112
+ ipv6 router isis CORE_ISP
+!
+router isis CORE_ISP
+ net 49.0001.2000.0000.2000.00
+ is-type level-2-only
+ advertise passive-only
+ metric-style wide
+ microloop avoidance 
+ passive-interface Loopback0
+ !
+ address-family ipv6
+  multi-topology
+ exit-address-family
 !
 !
 virtual-service csr_mgmt
@@ -161,14 +173,6 @@ no ip http secure-server
 !
 !
 control-plane
-!
- !
- !
- !
- !
-!
-!
-!
 !
 !
 line con 0
